@@ -1,0 +1,23 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: asfi_pgvector_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-asfi_admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-asfi_secure_password_2026}
+      POSTGRES_DB: ${DB_NAME:-asfi_normativa}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - pgvector_data:/var/lib/postgresql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-asfi_admin} -d ${DB_NAME:-asfi_normativa}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgvector_data:
+    driver: local

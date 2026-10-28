@@ -1,0 +1,15 @@
+# Entorno virtual
+venv/
+__pycache__/
+*.pyc
+
+# Variables de entorno
+.env
+
+# Base de datos persistente (si se mapea al host)
+postgres_data/
+docker-compose.override.yml
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
