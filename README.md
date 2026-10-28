@@ -1,8 +1,18 @@
-# ASFI Normativa Search con pgvector
+<div align="center">
 
-Microservicio de búsqueda semántica sobre normativa de la Autoridad de Supervisión del Sistema Financiero (ASFI) de Bolivia. Combina FastAPI, PostgreSQL con la extensión `pgvector` y embeddings de OpenAI para recuperar fragmentos normativos relevantes a partir de preguntas en lenguaje natural.
+# ASFI Normativa Search
+
+### Un prototipo de investigación aplicada para explorar búsqueda semántica sobre normativa financiera
+
+</div>
+
+Este repositorio explora cómo **embeddings**, búsqueda vectorial y una API sencilla pueden convertir preguntas en lenguaje natural en fragmentos normativos relevantes de ASFI. Es un punto de partida para experimentar con sistemas RAG prácticos, trazables y orientados a información regulatoria.
 
 > **Estado:** proyecto demostrativo. El script de ingesta incluye cinco fragmentos de ejemplo; no contiene una copia integral ni oficial de la normativa ASFI.
+
+<div align="center">
+  <img src="https://img.shields.io/static/v1?label=&message=Focus&color=ff6a00&style=for-the-badge" alt="Focus" />
+</div>
 
 ## Características
 
@@ -18,6 +28,22 @@ Microservicio de búsqueda semántica sobre normativa de la Autoridad de Supervi
 2. `POST /search` vectoriza la consulta del usuario con OpenAI.
 3. PostgreSQL ordena los fragmentos con distancia coseno usando el índice HNSW.
 4. La API devuelve los resultados junto con su puntuación de similitud.
+
+<div align="center">
+  <img src="https://img.shields.io/static/v1?label=&message=Evolucion%20recomendada%20%7C%20Beta&color=ff6a00&style=for-the-badge" alt="Evolución recomendada para beta" />
+</div>
+
+La primera recomendación para una versión beta es ampliar el **pipeline de ingesta**. En lugar de depender de los cinco registros incluidos en `ingest.py`, el sistema debería procesar de forma controlada **circulares y reglamentos en PDF oficiales de ASFI**.
+
+La ampliación se concentra en `ingest.py` —o en un módulo de ingesta que lo reemplace— e incorporaría estas etapas:
+
+1. Registro y descarga controlada de documentos desde fuentes oficiales, conservando URL, fecha de consulta y versión.
+2. Extracción de texto desde PDF y OCR para documentos escaneados.
+3. División en fragmentos semánticos que preserven metadatos normativos: documento, versión, título, capítulo, sección, artículo y página de origen.
+4. Generación de embeddings y actualización idempotente de PostgreSQL/pgvector, sin borrar la colección completa en cada ejecución.
+5. Validación, trazabilidad y revisión humana de la fuente antes de exponer los resultados de búsqueda.
+
+Esta evolución permitiría pasar del dataset de demostración a un corpus normativo verificable, manteniendo la misma interfaz de búsqueda y el índice vectorial existentes.
 
 ## Requisitos
 
