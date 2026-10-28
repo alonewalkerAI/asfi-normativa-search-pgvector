@@ -168,4 +168,4 @@ ingest.py         # Ingesta del dataset de demostración
 
 ## Licencia
 
-No se ha definido una licencia para este proyecto. Agregue una antes de distribuir o reutilizar el código públicamente.
+Distribuido bajo la licencia MIT. Consulte [LICENSE](LICENSE) para conocer los permisos, condiciones y la limitación de responsabilidad aplicables.
